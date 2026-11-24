@@ -1,0 +1,95 @@
+digraph ER {
+  graph [rankdir=LR, bgcolor="white", fontname="Helvetica", nodesep=0.5, ranksep=1.0, pad=0.3, label="CareerLens - ER / Relational Diagram  (PK = primary key, FK = foreign key)", labelloc=t, fontsize=18];
+  node  [shape=plain, fontname="Helvetica", fontsize=11];
+  edge  [fontname="Helvetica", fontsize=10, color="#555555", arrowtail=none];
+
+  users [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+    <TR><TD BGCOLOR="#3B82F6"><FONT COLOR="white"><B>users</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT" PORT="pk"><B>PK</B> user_id</TD></TR>
+    <TR><TD ALIGN="LEFT">name</TD></TR>
+    <TR><TD ALIGN="LEFT">email (UNIQUE)</TD></TR>
+    <TR><TD ALIGN="LEFT">password_hash</TD></TR>
+    <TR><TD ALIGN="LEFT">college, branch, year_of_study</TD></TR>
+    <TR><TD ALIGN="LEFT">resume_link</TD></TR>
+    <TR><TD ALIGN="LEFT" PORT="fk"><B>FK</B> target_role_id</TD></TR>
+  </TABLE>>];
+
+  roles [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+    <TR><TD BGCOLOR="#8B5CF6"><FONT COLOR="white"><B>roles</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK</B> role_id</TD></TR>
+    <TR><TD ALIGN="LEFT">role_name (UNIQUE)</TD></TR>
+  </TABLE>>];
+
+  skills [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+    <TR><TD BGCOLOR="#10B981"><FONT COLOR="white"><B>skills</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK</B> skill_id</TD></TR>
+    <TR><TD ALIGN="LEFT">skill_name (UNIQUE)</TD></TR>
+  </TABLE>>];
+
+  user_skills [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+    <TR><TD BGCOLOR="#9CA3AF"><FONT COLOR="white"><B>user_skills</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK, FK</B> user_id</TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK, FK</B> skill_id</TD></TR>
+  </TABLE>>];
+
+  role_skills [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+    <TR><TD BGCOLOR="#9CA3AF"><FONT COLOR="white"><B>role_skills</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK, FK</B> role_id</TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK, FK</B> skill_id</TD></TR>
+    <TR><TD ALIGN="LEFT">importance (required/preferred)</TD></TR>
+  </TABLE>>];
+
+  applications [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+    <TR><TD BGCOLOR="#F59E0B"><FONT COLOR="white"><B>applications</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK</B> application_id</TD></TR>
+    <TR><TD ALIGN="LEFT"><B>FK</B> user_id</TD></TR>
+    <TR><TD ALIGN="LEFT">company, role_title</TD></TR>
+    <TR><TD ALIGN="LEFT">status (Applied/Interview/Offered/Rejected)</TD></TR>
+    <TR><TD ALIGN="LEFT">applied_date, deadline</TD></TR>
+    <TR><TD ALIGN="LEFT">location, salary, notes, next_step</TD></TR>
+    <TR><TD ALIGN="LEFT">logo, logo_color</TD></TR>
+  </TABLE>>];
+
+  jobs [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+    <TR><TD BGCOLOR="#EF4444"><FONT COLOR="white"><B>jobs</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK</B> job_id</TD></TR>
+    <TR><TD ALIGN="LEFT">external_id (UNIQUE)</TD></TR>
+    <TR><TD ALIGN="LEFT">title, company, location</TD></TR>
+    <TR><TD ALIGN="LEFT">job_type, salary, description</TD></TR>
+    <TR><TD ALIGN="LEFT">category, posted, apply_url</TD></TR>
+  </TABLE>>];
+
+  job_skills [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+    <TR><TD BGCOLOR="#9CA3AF"><FONT COLOR="white"><B>job_skills</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK, FK</B> job_id</TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK, FK</B> skill_id</TD></TR>
+  </TABLE>>];
+
+  fake_checks [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+    <TR><TD BGCOLOR="#6366F1"><FONT COLOR="white"><B>fake_checks</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK</B> check_id</TD></TR>
+    <TR><TD ALIGN="LEFT"><B>FK</B> user_id</TD></TR>
+    <TR><TD ALIGN="LEFT">title, company, salary, contact</TD></TR>
+    <TR><TD ALIGN="LEFT">description</TD></TR>
+    <TR><TD ALIGN="LEFT">risk_score (0-100), verdict</TD></TR>
+  </TABLE>>];
+
+  fake_check_flags [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+    <TR><TD BGCOLOR="#6366F1"><FONT COLOR="white"><B>fake_check_flags</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><B>PK</B> flag_id</TD></TR>
+    <TR><TD ALIGN="LEFT"><B>FK</B> check_id</TD></TR>
+    <TR><TD ALIGN="LEFT">label, severity</TD></TR>
+  </TABLE>>];
+
+  // one -> many  (crow's foot on the "many" side)
+  roles        -> users            [dir=both, arrowtail=none, arrowhead=crow, label="1 : N (target role)"];
+  users        -> applications     [dir=both, arrowtail=none, arrowhead=crow, label="1 : N"];
+  users        -> fake_checks      [dir=both, arrowtail=none, arrowhead=crow, label="1 : N"];
+  fake_checks  -> fake_check_flags [dir=both, arrowtail=none, arrowhead=crow, label="1 : N"];
+  users        -> user_skills      [dir=both, arrowtail=none, arrowhead=crow];
+  skills       -> user_skills      [dir=both, arrowtail=none, arrowhead=crow];
+  roles        -> role_skills      [dir=both, arrowtail=none, arrowhead=crow];
+  skills       -> role_skills      [dir=both, arrowtail=none, arrowhead=crow];
+  jobs         -> job_skills       [dir=both, arrowtail=none, arrowhead=crow];
+  skills       -> job_skills       [dir=both, arrowtail=none, arrowhead=crow];
+}
