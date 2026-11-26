@@ -1,8 +1,5 @@
--- =====================================================================
--- CareerLens (SQL version) - queries_demo.sql
--- Practice / viva queries. Run after schema.sql, seed.sql and sample_data.sql.
--- =====================================================================
-USE careerlens_db;
+
+USE hireshield_db;
 
 -- 1. Basic SELECT with WHERE and ORDER BY
 SELECT name, email, college FROM users WHERE branch = 'CSE' ORDER BY name;

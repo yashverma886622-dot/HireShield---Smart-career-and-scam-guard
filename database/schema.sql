@@ -1,10 +1,8 @@
--- =====================================================================
--- CareerLens - schema.sql
--- =====================================================================
 
-DROP DATABASE IF EXISTS careerlens_db;
-CREATE DATABASE careerlens_db;
-USE careerlens_db;
+
+DROP DATABASE IF EXISTS hireshield_db;
+CREATE DATABASE hireshield_db;
+USE hireshield_db;
 
 -- ---------------------------------------------------------------------
 -- 1. ROLES  (target job roles such as "Frontend Developer")

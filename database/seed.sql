@@ -1,8 +1,4 @@
--- =====================================================================
--- CareerLens - seed.sql
--- =====================================================================
-
-USE careerlens_db;
+USE hireshield_db;
 
 -- Roles
 INSERT INTO roles (role_name) VALUES

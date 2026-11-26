@@ -1,9 +1,5 @@
--- =====================================================================
--- CareerLens (SQL version) - sample_data.sql   (OPTIONAL)
--- Run after schema.sql and seed.sql to get demo rows for your SQL queries.
--- Both demo users have the password:  demo123
--- =====================================================================
-USE careerlens_db;
+
+USE hireshield_db;
 select * from users;
 INSERT INTO users (name, email, password_hash, college, branch, year_of_study, target_role_id) VALUES
  ('Demo Student', 'demo@careerlens.com', '$2a$10$JYye5dMPBz2a2Ar/YPAxSuom44qOZkqbYiC3jDhFl3/wnnsMUvO.W', 'KRMU', 'CSE', '2nd Year',
